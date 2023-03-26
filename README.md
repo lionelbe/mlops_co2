@@ -72,7 +72,7 @@ To view the prediction history for a logged-in user, send a GET request to the /
 ## Database
 The API uses a SQLite database to store user accounts and prediction history. The database is implemented using SQLAlchemy, and the schema is defined in models.py.
 
-# Group Member
+## Group Member
 
 Calvin Pierre-Joseph<br>
 Michael Laidet<br>
