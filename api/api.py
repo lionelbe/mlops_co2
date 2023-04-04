@@ -1,45 +1,37 @@
 from fastapi import FastAPI, Depends, HTTPException, Security
 from fastapi.security import HTTPBasic, HTTPBasicCredentials
 from fastapi.responses import JSONResponse
-from pydantic import BaseModel
+from fastapi.responses import Response
 import joblib
 import numpy as np
+
 from database import Session, DbUser, Prediction
-from fastapi.responses import Response
-# Load the saved linear regression model
-model = joblib.load('linear_regression_model.joblib')
+from models import User, CarData
 
-class User(BaseModel):
-    username: str
-    password: str
-# Define the input data schema
-class CarData(BaseModel):
-    lib_mrq: int
-    lib_mod_doss: int
-    cnit: int
-    cod_cbr: int
-    hybride: int
-    puiss_admin_98: int
-    puiss_max: float
-    typ_boite_nb_rapp: int
-    conso_urb: float
-    conso_exurb: float
-    conso_mixte: float
-    masse_ordma_min: int
-    masse_ordma_max: int
-    Carrosserie: int
-    gamme: int
+model = joblib.load('lr_model.joblib')
 
-
-# Create a FastAPI instance
-app = FastAPI()
-
-
-
-
-# Define a function to authenticate users via HTTP Basic Auth
+app = FastAPI(title="CO2 Emissions Prediction API",
+    description="An API to predict CO2 emissions of cars based on their characteristics",
+    version="1.0.0",
+    openapi_tags=[
+        {
+            "name": "healthcheck",
+            "description": "Endpoints for health checking the API",
+        },
+        {
+            "name": "users",
+            "description": "Endpoints for creating and authenticating users",
+        },
+        {
+            "name": "predictions",
+            "description": "Endpoints for making and retrieving predictions",
+        },
+        {
+            "name": "history",
+            "description": "Endpoints for retrieving the history of all predictions made",
+        },
+    ],)
 security = HTTPBasic()
-
 
 def authenticate_user(credentials: HTTPBasicCredentials = Security(security)):
     session = Session()
@@ -49,7 +41,11 @@ def authenticate_user(credentials: HTTPBasicCredentials = Security(security)):
         raise HTTPException(status_code=401, detail="Invalid username or password")
     return db_user
 
-@app.post('/users')
+@app.get('/status', tags=["healthcheck"], description="Check if the API is running.")
+def status():
+    return {'message': 'API is running!'}
+
+@app.post('/users', tags=["users"], description="Create a new user.")
 async def create_user(user: User):
     session = Session()
     db_user = DbUser(username=user.username, password=user.password)
@@ -58,8 +54,7 @@ async def create_user(user: User):
     session.close()
     return JSONResponse(content={"message": "User created successfully"})
 
-
-@app.post('/login')
+@app.post('/login', tags=["users"], description="Authenticate a user.")
 async def login(user: User):
     session = Session()
     db_user = session.query(DbUser).filter_by(username=user.username, password=user.password).first()
@@ -68,18 +63,12 @@ async def login(user: User):
         raise HTTPException(status_code=404, detail="Invalid username or password")
     return JSONResponse(content={"message": "Login successful"})
 
-
-# Define the prediction endpoint
-@app.post('/predict')
+@app.post('/predict', tags=["predictions"], description="Make a CO2 emissions prediction for a car.")
 async def predict_co2_emissions(car_data: CarData, user: DbUser = Depends(authenticate_user)):
-    # Convert the input data to a numpy array
     input_data = np.array([
     car_data.lib_mrq,
-    car_data.lib_mod_doss,
-    car_data.cnit,
     car_data.cod_cbr,
     car_data.hybride,
-    car_data.puiss_admin_98,
     car_data.puiss_max,
     car_data.typ_boite_nb_rapp,
     car_data.conso_urb,
@@ -90,19 +79,15 @@ async def predict_co2_emissions(car_data: CarData, user: DbUser = Depends(authen
     car_data.Carrosserie,
     car_data.gamme
     ]).reshape(1, -1)
-    # Use the model to predict CO2 emissions
+
     co2_emissions = model.predict(input_data)[0]
 
-    # Store the prediction in the database
     session = Session()
     prediction = Prediction(
         user=user,
         lib_mrq=car_data.lib_mrq,
-        lib_mod_doss=car_data.lib_mod_doss,
-        cnit=car_data.cnit,
         cod_cbr=car_data.cod_cbr,
         hybride=car_data.hybride,
-        puiss_admin_98=car_data.puiss_admin_98,
         puiss_max=car_data.puiss_max,
         typ_boite_nb_rapp=car_data.typ_boite_nb_rapp,
         conso_urb=car_data.conso_urb,
@@ -118,12 +103,18 @@ async def predict_co2_emissions(car_data: CarData, user: DbUser = Depends(authen
     session.commit()
     session.close()
 
-    # Return the prediction as JSON
     return JSONResponse({'co2_emissions': co2_emissions})
 
-# Define the get history endpoint
-@app.get("/history")
+@app.get("/history", tags=["history"], description="Get the history of all CO2 emissions predictions made")
 async def get_history():
+
+    """
+    Get the history of all CO2 emissions predictions made
+
+    Returns:
+        A dictionary with a "history" key and a list of all predictions made and stored in the database
+    """
+
     session = Session()
     predictions = session.query(Prediction).all()
     session.close()
@@ -132,22 +123,22 @@ async def get_history():
     return {"history": [prediction.__dict__ for prediction in predictions]}
 
 
-@app.get("/history2")
+@app.get("/presonnal_history", tags=["history"], description="Get the history of CO2 emissions predictions made by the authenticated user")
 async def get_history(user: DbUser = Depends(authenticate_user)):
+
+    """
+    Get the history of CO2 emissions predictions made by the authenticated user
+
+    Args:
+        user: the authenticated user
+
+    Returns:
+        A dictionary with a "history" key and a list of all predictions made and stored in the database by the authenticated user
+    """
+
     session = Session()
     predictions = session.query(Prediction).filter_by(user=user).all()
     session.close()
     if not predictions:
         raise HTTPException(status_code=404, detail="No history found for this user")
     return {"history": [prediction.__dict__ for prediction in predictions]}
-
-"""
-# Define the get history endpoint
-@app.get("/presonnal_history")
-async def get_history(user: DbUser = Depends(authenticate_user)):
-    session = Session()
-    predictions = session.query(Prediction).all()
-    session.close()
-    if not predictions:
-        raise HTTPException(status_code=404, detail="History is empty")
-    return {"history": [prediction.__dict__ for prediction in predictions]}"""
