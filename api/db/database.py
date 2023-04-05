@@ -3,7 +3,7 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker, relationship
 
 # Define the SQLite database connection
-engine = create_engine('sqlite:///predictions.db', echo=True)
+engine = create_engine('sqlite:///db/predictions.db', echo=True)
 Session = sessionmaker(bind=engine)
 Base = declarative_base()
 

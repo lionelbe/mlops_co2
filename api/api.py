@@ -4,11 +4,13 @@ from fastapi.responses import JSONResponse
 from fastapi.responses import Response
 import joblib
 import numpy as np
+from typing import Dict
 
-from database import Session, DbUser, Prediction
+from db.database import Session, DbUser, Prediction
 from models import User, CarData
+from utils import get_equiv_table
 
-model = joblib.load('lr_model.joblib')
+model = joblib.load('joblib/lr_model.joblib')
 
 app = FastAPI(title="CO2 Emissions Prediction API",
     description="An API to predict CO2 emissions of cars based on their characteristics",
@@ -63,22 +65,29 @@ async def login(user: User):
         raise HTTPException(status_code=404, detail="Invalid username or password")
     return JSONResponse(content={"message": "Login successful"})
 
+@app.get("/equiv_table/{column}", tags=["Equivalence Table"], summary="Retrieve the equivalence table for a given column.")
+def get_equiv_table_endpoint(column: str) -> Dict[str, int]:
+
+    """
+    Retrieve the equivalence table for a given column.
+    
+    - **lib_mrq**: The brand of the car.
+    - **cod_cbr**: The fuel type of the car.
+    - **hybride**: Whether the car is hybrid or not.
+    - **typ_boite_nb_rapp**: The type of gearbox and number of gears of the car.
+    - **Carrosserie**: The body type of the car.
+    - **gamme**: The range or series of the car model.
+    
+    """
+
+    equiv_table = get_equiv_table(column)
+    if equiv_table is None:
+        return {"error": "Invalid column name or column is not categorical"}
+    return equiv_table
+
 @app.post('/predict', tags=["predictions"], description="Make a CO2 emissions prediction for a car.")
 async def predict_co2_emissions(car_data: CarData, user: DbUser = Depends(authenticate_user)):
-    input_data = np.array([
-    car_data.lib_mrq,
-    car_data.cod_cbr,
-    car_data.hybride,
-    car_data.puiss_max,
-    car_data.typ_boite_nb_rapp,
-    car_data.conso_urb,
-    car_data.conso_exurb,
-    car_data.conso_mixte,
-    car_data.masse_ordma_min,
-    car_data.masse_ordma_max,
-    car_data.Carrosserie,
-    car_data.gamme
-    ]).reshape(1, -1)
+    input_data = np.array(list(car_data.dict().values())).reshape(1,-1)
 
     co2_emissions = model.predict(input_data)[0]
 
@@ -105,7 +114,7 @@ async def predict_co2_emissions(car_data: CarData, user: DbUser = Depends(authen
 
     return JSONResponse({'co2_emissions': co2_emissions})
 
-@app.get("/history", tags=["history"], description="Get the history of all CO2 emissions predictions made")
+@app.get("/history", tags=["history"], summary="Get the history of all CO2 emissions predictions made")
 async def get_history():
 
     """
@@ -123,7 +132,7 @@ async def get_history():
     return {"history": [prediction.__dict__ for prediction in predictions]}
 
 
-@app.get("/presonnal_history", tags=["history"], description="Get the history of CO2 emissions predictions made by the authenticated user")
+@app.get("/presonnal_history", tags=["history"], summary="Get the history of CO2 emissions predictions made by the authenticated user")
 async def get_history(user: DbUser = Depends(authenticate_user)):
 
     """
