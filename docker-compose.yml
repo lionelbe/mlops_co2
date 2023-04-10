@@ -1,0 +1,18 @@
+version: "3.9"
+
+services:
+  app:
+    build: .
+    ports:
+      - "8000:8000"
+    depends_on:
+      - postgres
+    environment:
+      - DATABASE_URL=postgresql://calvin:co2mlops2023@postgres:5432/co2_prediction
+
+  postgres:
+    image: postgres:13-alpine
+    environment:
+      POSTGRES_USER: calvin
+      POSTGRES_PASSWORD: co2mlops2023
+      POSTGRES_DB: co2_prediction

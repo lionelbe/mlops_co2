@@ -1,18 +1,19 @@
-from sqlalchemy import create_engine, Column, Integer, Float, String, ForeignKey
+import os
+
+from sqlalchemy import create_engine, Column, Integer, Float, String, ForeignKey, Text
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker, relationship
 
-# Define the SQLite database connection
-engine = create_engine('sqlite:///db/predictions.db', echo=True)
-Session = sessionmaker(bind=engine)
+DATABASE_URL = database_url = os.environ.get("DATABASE_URL")#"postgresql://calvin:co2mlops2023@localhost/co2_prediction"
+engine = create_engine(DATABASE_URL)
+Session = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 Base = declarative_base()
 
-# Define the Prediction class, which maps to the "predictions" table in the database
 class DbUser(Base):
     __tablename__ = 'users'
     id = Column(Integer, primary_key=True)
-    username = Column(String)
-    password = Column(String)
+    username = Column(Text)
+    password = Column(Text)
     predictions = relationship("Prediction", back_populates="user")
 
 
@@ -24,17 +25,18 @@ class Prediction(Base):
     lib_mrq = Column(Integer)
     cod_cbr = Column(Integer)
     hybride = Column(Integer)
-    puiss_max = Column(Float)
+    puiss_max = Column(Float(precision=2))
     typ_boite_nb_rapp = Column(Integer)
-    conso_urb = Column(Float)
-    conso_exurb = Column(Float)
-    conso_mixte = Column(Float)
+    conso_urb = Column(Float(precision=2))
+    conso_exurb = Column(Float(precision=2))
+    conso_mixte = Column(Float(precision=2))
     masse_ordma_min = Column(Integer)
     masse_ordma_max = Column(Integer)
     Carrosserie = Column(Integer)
     gamme = Column(Integer)
-    co2_emissions = Column(Float)
+    co2_emissions = Column(Float(precision=2))
+
 
 
 # Create the "predictions" table in the database, if it doesn't already exist
-Base.metadata.create_all(engine)
+Base.metadata.create_all(bind=engine)

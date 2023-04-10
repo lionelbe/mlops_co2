@@ -10,6 +10,7 @@ from db.database import Session, DbUser, Prediction
 from models import User, CarData
 from utils import get_equiv_table
 
+
 model = joblib.load('joblib/lr_model.joblib')
 
 app = FastAPI(title="CO2 Emissions Prediction API",
@@ -132,7 +133,7 @@ async def get_history():
     return {"history": [prediction.__dict__ for prediction in predictions]}
 
 
-@app.get("/presonnal_history", tags=["history"], summary="Get the history of CO2 emissions predictions made by the authenticated user")
+@app.get("/personal_history", tags=["history"], summary="Get the history of CO2 emissions predictions made by the authenticated user")
 async def get_history(user: DbUser = Depends(authenticate_user)):
 
     """
@@ -151,3 +152,11 @@ async def get_history(user: DbUser = Depends(authenticate_user)):
     if not predictions:
         raise HTTPException(status_code=404, detail="No history found for this user")
     return {"history": [prediction.__dict__ for prediction in predictions]}
+
+@app.post('/logout')
+async def logout(user: DbUser = Depends(authenticate_user)):
+    session = Session()
+    session.delete(user)
+    session.commit()
+    session.close()
+    return JSONResponse(content={"message": "User logged out successfully"})
