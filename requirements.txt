@@ -7,3 +7,4 @@ scikit-learn==1.2.2
 pandas
 uvicorn
 psycopg2-binary
+httpx
