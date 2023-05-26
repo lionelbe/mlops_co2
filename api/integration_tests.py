@@ -1,6 +1,7 @@
 import unittest
 from fastapi.testclient import TestClient
-from api import app
+from api.app import app
+
 
 class TestIntegration(unittest.TestCase):
 
