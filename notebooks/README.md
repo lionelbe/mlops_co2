@@ -2,6 +2,7 @@
 
 The notebooks correspond to different stages of the project (and are kept for this reason), but only the last one `04_final.ipynb` is useful.
 
+final_dataset.csv & final_model.joblib are made with this notebook.
 
 - 01_explore.ipynb<br/>
 exploration of datasets stored in 'datasets' folder
