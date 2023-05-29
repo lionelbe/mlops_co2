@@ -184,8 +184,6 @@ def train_and_dump_model(task_instance, file_path_for_model):
         print(predicted_mae)
         print(last_model_mae)
 
-        data = preprocessing.RobustScaler().fit_transform(data)
-
         trained_model = perform_grid_search(data, target)
 
         dump(trained_model, file_path_for_model)
