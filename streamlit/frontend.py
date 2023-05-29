@@ -2,7 +2,7 @@ import streamlit as st
 import requests
 from st_pages import Page, show_pages, add_page_title
 
-API_HOST='127.0.0.1'
+API_HOST='mlops-app'
 API_PORT=8000
 API_URL=f'http://{API_HOST}:{API_PORT}'
 st.session_state["api_url"] = API_URL

@@ -36,6 +36,18 @@ services:
     volumes:
       - ./api/log:/app/log
 
+  streamlit:
+    build:
+      context: ./streamlit
+      dockerfile: Dockerfile
+    container_name: mlops-frontend
+    ports:
+      - "8501:8501"
+    depends_on:
+      - app
+      - postgres
+    networks:
+      - api-network
 
 networks:
   api-network:
