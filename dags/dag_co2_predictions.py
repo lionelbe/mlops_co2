@@ -18,6 +18,7 @@ from sklearn.compose import TransformedTargetRegressor
 
 
 path_to_data = '/app/clean_data/my_dataset.csv'
+file_path_for_model = '/app/models/new_trained_model_regressor.joblib'
 
 my_dag = DAG(
     dag_id='predict_co2_car',
@@ -170,7 +171,7 @@ def predict_score(task_instance):
     task_instance.xcom_push(key='mean_absolute_error', value=mae)
 
 
-def train_and_dump_model(task_instance):
+def train_and_dump_model(task_instance, file_path_for_model):
     """ If necessary, retrain model """
 
     data, target = split_dataset()
@@ -187,7 +188,7 @@ def train_and_dump_model(task_instance):
 
         trained_model = perform_grid_search(data, target)
 
-        dump(trained_model, 'new_trained_model_regressor.joblib')
+        dump(trained_model, file_path_for_model)
 
     else:
         pass
