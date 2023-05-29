@@ -8,4 +8,6 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 COPY api .
 
+VOLUME /app/log
+
 CMD ["python", "test_api.py"]
