@@ -1,0 +1,133 @@
+
+=== Test: Status Endpoint ===
+Status endpoint returned 200
+Response: {
+    "message": "API is running!"
+}
+
+=== Test: User Creation Endpoint ===
+User creation endpoint returned 200
+Response: {
+    "message": "User created successfully"
+}
+
+=== Test: Login Endpoint ===
+Login endpoint returned 200
+Response: {
+    "message": "Login successful"
+}
+
+=== Test: CO2 Emissions Prediction Endpoint ===
+Prediction endpoint returned 200
+Response: {
+    "co2_emissions": 288.69180057398603
+}
+
+=== Test: Get History Endpoint ===
+Get History endpoint returned 200
+Response: {
+    "history": [
+        {
+            "user_id": 1,
+            "lib_mrq": 26,
+            "hybride": 0,
+            "puiss_max": 190.0,
+            "conso_urb": 16.5,
+            "conso_mixte": 12.1,
+            "masse_ordma_max": 2275,
+            "gamme": 5,
+            "cod_cbr": 1,
+            "id": 2,
+            "typ_boite_nb_rapp": 1,
+            "conso_exurb": 9.5,
+            "masse_ordma_min": 2186,
+            "Carrosserie": 6,
+            "co2_emissions": 288.6918
+        },
+        {
+            "user_id": 1,
+            "lib_mrq": 26,
+            "hybride": 0,
+            "puiss_max": 190.0,
+            "conso_urb": 16.5,
+            "conso_mixte": 12.1,
+            "masse_ordma_max": 2275,
+            "gamme": 5,
+            "cod_cbr": 1,
+            "id": 3,
+            "typ_boite_nb_rapp": 1,
+            "conso_exurb": 9.5,
+            "masse_ordma_min": 2186,
+            "Carrosserie": 6,
+            "co2_emissions": 288.6918
+        },
+        {
+            "user_id": 1,
+            "lib_mrq": 26,
+            "hybride": 0,
+            "puiss_max": 190.0,
+            "conso_urb": 16.5,
+            "conso_mixte": 12.1,
+            "masse_ordma_max": 2275,
+            "gamme": 5,
+            "cod_cbr": 1,
+            "id": 4,
+            "typ_boite_nb_rapp": 1,
+            "conso_exurb": 9.5,
+            "masse_ordma_min": 2186,
+            "Carrosserie": 6,
+            "co2_emissions": 288.6918
+        },
+        {
+            "user_id": 1,
+            "lib_mrq": 26,
+            "hybride": 0,
+            "puiss_max": 190.0,
+            "conso_urb": 16.5,
+            "conso_mixte": 12.1,
+            "masse_ordma_max": 2275,
+            "gamme": 5,
+            "cod_cbr": 1,
+            "id": 5,
+            "typ_boite_nb_rapp": 1,
+            "conso_exurb": 9.5,
+            "masse_ordma_min": 2186,
+            "Carrosserie": 6,
+            "co2_emissions": 288.6918
+        },
+        {
+            "user_id": 1,
+            "lib_mrq": 26,
+            "hybride": 0,
+            "puiss_max": 190.0,
+            "conso_urb": 16.5,
+            "conso_mixte": 12.1,
+            "masse_ordma_max": 2275,
+            "gamme": 5,
+            "cod_cbr": 1,
+            "id": 6,
+            "typ_boite_nb_rapp": 1,
+            "conso_exurb": 9.5,
+            "masse_ordma_min": 2186,
+            "Carrosserie": 6,
+            "co2_emissions": 288.6918
+        },
+        {
+            "user_id": 1,
+            "lib_mrq": 26,
+            "hybride": 0,
+            "puiss_max": 190.0,
+            "conso_urb": 16.5,
+            "conso_mixte": 12.1,
+            "masse_ordma_max": 2275,
+            "gamme": 5,
+            "cod_cbr": 1,
+            "id": 7,
+            "typ_boite_nb_rapp": 1,
+            "conso_exurb": 9.5,
+            "masse_ordma_min": 2186,
+            "Carrosserie": 6,
+            "co2_emissions": 288.6918
+        }
+    ]
+}
