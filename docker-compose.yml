@@ -3,12 +3,15 @@ version: "3.9"
 services:
   app:
     build: .
+    container_name: mlops-app
     ports:
       - "8000:8000"
     depends_on:
       - postgres
     environment:
       - DATABASE_URL=postgresql://calvin:co2mlops2023@postgres:5432/co2_prediction
+    networks:
+      - api-network
 
   postgres:
     image: postgres:13-alpine
@@ -16,3 +19,25 @@ services:
       POSTGRES_USER: calvin
       POSTGRES_PASSWORD: co2mlops2023
       POSTGRES_DB: co2_prediction
+    networks:
+      - api-network
+
+  test:
+    build:
+      context: .
+      dockerfile: Dockerfile.test
+    image: integration_test-image
+    container_name: integration_test
+    networks:
+      - api-network
+    depends_on:
+      - app
+      - postgres
+    volumes:
+      - ./api/log:/app/log
+
+
+networks:
+  api-network:
+    driver: bridge 
+  
