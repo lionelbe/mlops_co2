@@ -56,18 +56,13 @@ def run_tests():
         header = "Test: CO2 Emissions Prediction Endpoint"
         results.append(f"\n=== {header} ===")
         car_data = {
-            "lib_mrq": 26,
-            "cod_cbr": 1,
+            "marque": 0,
+            "modele": 182,
+            "carburant":1,
             "hybride": 0,
-            "puiss_max": 190.0,
-            "typ_boite_nb_rapp": 1,
-            "conso_urb": 16.5,
-            "conso_exurb": 9.5,
-            "conso_mixte": 12.1,
-            "masse_ordma_min": 2186,
-            "masse_ordma_max": 2275,
-            "Carrosserie": 6,
-            "gamme": 5
+            "puiss_admin":7.0,
+            "puiss_max": 85.0,
+            "boite": 8
         }
         auth = ('testuser', 'testpassword')
         try:
