@@ -46,13 +46,13 @@ To make a prediction, a POST request is sent via the **/predict** endpoint with 
 
 ```JSON
 {
-    "marque": ...,                      # Integer: Brand identifier
-    "modele": ...,                      # Car Model
-    "carburant": ...,                   # Fuel type 
-    "hybride": ...,                     # Hybrid vehicle
-    "puiss_max": ...,                   # Power Rating (CV)
-    "puiss_max": ...,                   # Maximum power in kW
-    "boite_v": ...,                     # Gearbox type and number of gears
+    "marque": ...,      # Brand identifier
+    "modele": ...,      # Car Model
+    "carburant": ...,   # Fuel type 
+    "hybride": ...,     # Hybrid vehicle
+    "puiss_max": ...,   # Power Rating (CV)
+    "puiss_max": ...,   # Maximum power in kW
+    "boite_v": ...,     # Gearbox type and number of gears
 }
 ```
 
