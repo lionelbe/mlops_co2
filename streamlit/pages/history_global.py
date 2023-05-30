@@ -4,6 +4,7 @@ import json
 import pandas as pd
 
 API_URL = st.session_state["api_url"]
+# API_URL = 'http://mlops-app:8000'
 
 st.write("# Historique des prédictions d'émissions de CO2")
 

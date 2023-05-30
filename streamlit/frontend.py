@@ -1,9 +1,14 @@
+import os
 import streamlit as st
 import requests
 from st_pages import Page, show_pages, add_page_title
 
-API_HOST='mlops-app'
+API_HOST='127.0.0.1'
 API_PORT=8000
+
+if "DOCKER_APP" in os.environ:
+    API_HOST=os.environ['DOCKER_APP']
+
 API_URL=f'http://{API_HOST}:{API_PORT}'
 st.session_state["api_url"] = API_URL
 
@@ -33,3 +38,6 @@ st.set_page_config(
     page_icon="🌍"
 )
 
+
+if "DOCKER_APP" in os.environ:
+    st.write("Docker App")
