@@ -6,55 +6,53 @@ The dataset used to train the CO2 emission prediction model was obtained from th
 
 https://www.data.gouv.fr/fr/datasets/emissions-de-co2-et-de-polluants-des-vehicules-commercialises-en-france/
 
-## Requirements
-To use the API, the following dependencies must be installed:
+## Install & Run
+You can use the API by installing each component individually, but it's easier to do it with Docker !
 
-* FastAPI
-* Joblib
-* NumPy
-* Pydantic
-* SQLAlchemy
-* Uvicorn
+Clone the project repository to your local machine (at least api & streamlit folders).
 
-These dependencies can be installed using pip:
+**WITH DOCKER**
 
-```
-pip install fastapi joblib numpy pydantic sqlalchemy uvicorn
-```
-**OR**
-```
-pip install -r requirements.txt
-```
+Go in api folder.<br/>
+Run `docker-compose up --build`<br/>
+Go to `http://127.0.0.1:8000/docs/` to see the API.
+
+Go in streamlit folder.<br/>
+Run `docker-compose up --build`<br/>
+Go to `http://127.0.0.1:8501/` to run the frontend application.
+
+**WITHOUT DOCKER**
+
+Go in api folder.<br/>
+Create your virtual environment : virtualenv `.mlopsco2_api`<br/>
+Activate it : source `.mlopsco2_api/bin/activate`<br/>
+Install requirements : `pip install -r requirements.txt`<br/>
+Run the api : `uvicorn api:app --reload`
+
+Go in streamlit folder.<br/>
+Create your virtual environment : virtualenv `.mlopsco2_streamlit`<br/>
+Activate it : source `.mlopsco2_streamlit/bin/activate`<br/>
+Install requirements : `pip install -r requirements.txt`<br/>
+Run the api : `streamlit run frontend.py`
 
 ## Usage
-To use the API, follow these steps:
 
-Clone the project repository to your local machine.
-
-In the root directory of the project, run the following command to start the FastAPI app with Uvicorn:
-
-```
-uvicorn api/api:app --reload
-```
-The API is now running on http://localhost:8000. You can access the API documentation at http://localhost:8000/docs.
+The Frontend is running on http://localhost:8501.<br/>
+The API is running on http://localhost:8000.<br/>
+You can access the API documentation at http://localhost:8000/docs.
 
 ### Make your prediction : 
-To make a prediction, send a POST request to the **/predict** endpoint with the following parameters:
+To make a prediction, a POST request is sent via the **/predict** endpoint with the following parameters:
 
 ```JSON
 {
-    "lib_mrq": 1,                       # Integer: Brand identifier (there are 12 different brands)
-    "cod_cbr": 1,                       # Integer: Fuel type (there are 5 different types of fuel)
-    "hybride": 0,                       # Integer: Hybrid vehicle (0 or 1)
-    "puiss_max": 95.0,                  # Float: Maximum power in kW
-    "typ_boite_nb_rapp": 5,             # Integer: Gearbox type and number of gears
-    "conso_urb": 7.2,                   # Float: Urban consumption in L/100km
-    "conso_exurb": 4.5,                 # Float: Extra-urban consumption in L/100km
-    "conso_mixte": 5.5,                 # Float: Mixed consumption in L/100km
-    "masse_ordma_min": 1100,            # Integer: Minimum unladen weight in kg
-    "masse_ordma_max": 1200,            # Integer: Maximum unladen weight in kg
-    "Carrosserie": 1,                   # Integer: Body type
-    "gamme": 1                          # Integer: Vehicle category
+    "marque": ...,                      # Integer: Brand identifier
+    "modele": ...,                      # Car Model
+    "carburant": ...,                   # Fuel type 
+    "hybride": ...,                     # Hybrid vehicle
+    "puiss_max": ...,                   # Power Rating (CV)
+    "puiss_max": ...,                   # Maximum power in kW
+    "boite_v": ...,                     # Gearbox type and number of gears
 }
 ```
 
@@ -70,7 +68,7 @@ To log in to an existing account, send a POST request to the **/login** endpoint
 To view the prediction history for a logged-in user, send a GET request to the /history endpoint while logged in. The endpoint will return a JSON array of all the user's prediction history.
 
 ## Database
-The API uses a SQLite database to store user accounts and prediction history. The database is implemented using SQLAlchemy, and the schema is defined in models.py.
+The API uses a database to store user accounts and prediction history. The database is implemented using SQLAlchemy, and the schema is defined in models.py.
 
 ## Group Member
 
