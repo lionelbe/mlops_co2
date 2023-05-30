@@ -5,7 +5,14 @@ class User(BaseModel):
     password: str
 
 class CarData(BaseModel):
-    lib_mrq: int = Field(..., description="Brand identifier (there are 12 different brands)")
+    lib_mrq: int = Field(..., description="Brand identifier")
+    modele: int
+    carburant: int = Field(..., description="")
+    hybride: int = Field(..., description="")
+    puiss_admin: float = Field(..., description="")
+    puiss_max: float = Field(..., description="")
+    typ_boite_nb_rapp: int = Field(..., description="")
+    """lib_mrq: int = Field(..., description="Brand identifier (there are 12 different brands)")
     cod_cbr: int = Field(..., description="Fuel type (there are 5 different types of fuel)")
     hybride: int = Field(..., description="Hybrid vehicle (0 or 1)")
     puiss_max: float = Field(..., description="Maximum power in kW")
@@ -16,4 +23,4 @@ class CarData(BaseModel):
     masse_ordma_min: int = Field(..., description="Minimum unladen weight in kg")
     masse_ordma_max: int = Field(..., description="Maximum unladen weight in kg")
     Carrosserie: int = Field(..., description="Body type")
-    gamme: int = Field(..., description="Vehicle category")
+    gamme: int = Field(..., description="Vehicle category")"""

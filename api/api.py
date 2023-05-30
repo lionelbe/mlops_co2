@@ -11,7 +11,8 @@ from models import User, CarData
 from utils import get_equiv_table
 
 
-model = joblib.load('joblib/lr_model.joblib')
+#model = joblib.load('joblib/lr_model.joblib')
+model = joblib.load('joblib/lr_modelv2.joblib')
 
 app = FastAPI(title="CO2 Emissions Prediction API",
     description="An API to predict CO2 emissions of cars based on their characteristics",
@@ -95,18 +96,25 @@ async def predict_co2_emissions(car_data: CarData, user: DbUser = Depends(authen
     session = Session()
     prediction = Prediction(
         user=user,
-        lib_mrq=car_data.lib_mrq,
-        cod_cbr=car_data.cod_cbr,
-        hybride=car_data.hybride,
-        puiss_max=car_data.puiss_max,
-        typ_boite_nb_rapp=car_data.typ_boite_nb_rapp,
-        conso_urb=car_data.conso_urb,
-        conso_exurb=car_data.conso_exurb,
-        conso_mixte=car_data.conso_mixte,
-        masse_ordma_min=car_data.masse_ordma_min,
-        masse_ordma_max=car_data.masse_ordma_max,
-        Carrosserie=car_data.Carrosserie,
-        gamme=car_data.gamme,
+        #lib_mrq=car_data.lib_mrq,
+        #cod_cbr=car_data.cod_cbr,
+        #hybride=car_data.hybride,
+        #puiss_max=car_data.puiss_max,
+        #typ_boite_nb_rapp=car_data.typ_boite_nb_rapp,
+        #conso_urb=car_data.conso_urb,
+        #conso_exurb=car_data.conso_exurb,
+        #conso_mixte=car_data.conso_mixte,
+        #masse_ordma_min=car_data.masse_ordma_min,
+        #masse_ordma_max=car_data.masse_ordma_max,
+        #Carrosserie=car_data.Carrosserie,
+        #gamme=car_data.gamme,
+        lib_mrq = car_data.lib_mrq,
+        modele = car_data.modele,
+        carburant= car_data.carburant,
+        hybride = car_data.hybride,
+        puiss_admin= car_data.puiss_admin,
+        puiss_max = car_data.puiss_max,
+        typ_boite_nb_rapp = car_data.typ_boite_nb_rapp,
         co2_emissions=co2_emissions
     )
     session.add(prediction)
