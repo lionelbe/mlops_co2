@@ -73,12 +73,12 @@ def get_equiv_table_endpoint(column: str) -> Dict[str, int]:
     """
     Retrieve the equivalence table for a given column.
     
-    - **lib_mrq**: The brand of the car.
-    - **cod_cbr**: The fuel type of the car.
-    - **hybride**: Whether the car is hybrid or not.
-    - **typ_boite_nb_rapp**: The type of gearbox and number of gears of the car.
-    - **Carrosserie**: The body type of the car.
-    - **gamme**: The range or series of the car model.
+    - **marque**:
+    - **modele**:
+    - **hybride**:
+    - **carburant**:
+    - **boite_v**:
+
     
     """
 

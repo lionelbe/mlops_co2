@@ -2,8 +2,8 @@ import pandas as pd
 import numpy as np
 import joblib
 from fastapi import HTTPException
-df = pd.read_csv('data/labelencoder_df.csv')
-label_encoders = joblib.load('joblib/label_encoders.joblib')
+df = pd.read_csv('data/my_dataset.csv')
+label_encoders = joblib.load('joblib/label_encodersv2.joblib')
 
 def get_equiv_table(column):
     if column not in label_encoders:
