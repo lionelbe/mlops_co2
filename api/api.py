@@ -108,13 +108,13 @@ async def predict_co2_emissions(car_data: CarData, user: DbUser = Depends(authen
         #masse_ordma_max=car_data.masse_ordma_max,
         #Carrosserie=car_data.Carrosserie,
         #gamme=car_data.gamme,
-        lib_mrq = car_data.lib_mrq,
+        marque = car_data.marque,
         modele = car_data.modele,
         carburant= car_data.carburant,
         hybride = car_data.hybride,
         puiss_admin= car_data.puiss_admin,
         puiss_max = car_data.puiss_max,
-        typ_boite_nb_rapp = car_data.typ_boite_nb_rapp,
+        boite = car_data.boite,
         co2_emissions=co2_emissions
     )
     session.add(prediction)
