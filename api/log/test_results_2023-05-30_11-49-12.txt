@@ -1,0 +1,43 @@
+
+=== Test: Status Endpoint ===
+Status endpoint returned 200
+Response: {
+    "message": "API is running!"
+}
+
+=== Test: User Creation Endpoint ===
+User creation endpoint returned 200
+Response: {
+    "message": "User created successfully"
+}
+
+=== Test: Login Endpoint ===
+Login endpoint returned 200
+Response: {
+    "message": "Login successful"
+}
+
+=== Test: CO2 Emissions Prediction Endpoint ===
+Prediction endpoint returned 200
+Response: {
+    "co2_emissions": 175.94744522920482
+}
+
+=== Test: Get History Endpoint ===
+Get History endpoint returned 200
+Response: {
+    "history": [
+        {
+            "id": 1,
+            "modele": 182,
+            "hybride": 0,
+            "puiss_admin": 7.0,
+            "boite": 8,
+            "marque": 0,
+            "user_id": 1,
+            "carburant": 1,
+            "puiss_max": 85.0,
+            "co2_emissions": 175.94745
+        }
+    ]
+}

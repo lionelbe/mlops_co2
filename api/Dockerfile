@@ -6,7 +6,7 @@ COPY requirements.txt .
 
 RUN pip install --no-cache-dir -r requirements.txt
 
-COPY api .
+COPY . .
 
 ENV DATABASE_URL=postgresql://calvin:co2mlops2023@postgres:5432/co2_prediction
 

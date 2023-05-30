@@ -34,7 +34,7 @@ services:
       - app
       - postgres
     volumes:
-      - ./api/log:/app/log
+      - ./log:/app/log
 
 networks:
   api-network:
