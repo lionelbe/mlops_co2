@@ -73,11 +73,11 @@ def get_equiv_table_endpoint(column: str) -> Dict[str, int]:
     """
     Retrieve the equivalence table for a given column.
     
-    - **marque**:
-    - **modele**:
-    - **hybride**:
-    - **carburant**:
-    - **boite_v**:
+    - **marque**: The brand or manufacturer of the vehicle
+    - **modele**: The specific model or variant of the vehicle
+    - **hybride**: Indicates whether the vehicle is a hybrid or not
+    - **carburant**: Specifies the type of fuel used by the vehicle
+    - **boite_v**: Refers to the type of transmission in the vehicle (ex:manual,automatic)
 
     
     """

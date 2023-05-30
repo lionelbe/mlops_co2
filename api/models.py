@@ -7,11 +7,11 @@ class User(BaseModel):
 class CarData(BaseModel):
     marque: int = Field(..., description="Brand identifier")
     modele: int
-    carburant: int = Field(..., description="")
-    hybride: int = Field(..., description="")
-    puiss_admin: float = Field(..., description="")
-    puiss_max: float = Field(..., description="")
-    boite: int = Field(..., description="")
+    carburant: int = Field(..., description="Model identifier")
+    hybride: int = Field(..., description="Hybrid indicator")
+    puiss_admin: float = Field(..., description="Administrative power")
+    puiss_max: float = Field(..., description="Maximum power")
+    boite: int = Field(..., description="Transmission type")
     """lib_mrq: int = Field(..., description="Brand identifier (there are 12 different brands)")
     cod_cbr: int = Field(..., description="Fuel type (there are 5 different types of fuel)")
     hybride: int = Field(..., description="Hybrid vehicle (0 or 1)")
