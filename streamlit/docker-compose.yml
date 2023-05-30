@@ -6,10 +6,12 @@ services:
     container_name: mlops-frontend
     ports:
       - "8501:8501"
+    environment:
+      DOCKER_APP: mlops-app
     networks:
-      - api-network
-
+      - my-proxy-network
+      
 networks:
-  api-network:
-    driver: bridge 
-  
+  my-proxy-network:
+    name: mlops_co2_api-network
+    external: true
