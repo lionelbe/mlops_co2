@@ -39,5 +39,3 @@ st.set_page_config(
 )
 
 
-if "DOCKER_APP" in os.environ:
-    st.write("Docker App")

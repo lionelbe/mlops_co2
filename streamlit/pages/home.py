@@ -18,9 +18,17 @@ st.set_page_config(
 st.write("# Bienvenue 👋")
 
 st.markdown("""
-Cette application a été créée dans le cadre de la formation MLOps janvier 2023.
+Cette application permet de faire des prédictions d'émission CO2 en fonction des caractéristiques d'un véhicule, et de consulter l'historique (personnel ou global) des prédictions.
+\nIl est possible  de créer un utilisateur via l'application, c'est même nécessaire pour faire des prédictions et pour l'historique personnel.
+
+L'application tourne dans un container Docker.
+Elle est l'interface frontend d'une API FastAPI qui tourne d'un autre conteneur, et qui communique avec une Base de données PostgreSQL.
+            """)
+st.image('img/graphique.jpg')
+
+st.markdown("""
+Cette application a été créée dans le cadre de la formation Datascientest / MLOps janvier 2023 par
 - Calvin Pierre-Joseph
 - Michael Laidet
 - Lionel Bérenger            
             """)
-
